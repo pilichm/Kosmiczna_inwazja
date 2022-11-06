@@ -6,6 +6,7 @@ TagManager:
   tags:
   - EnemyLaser
   - HealthBonus
+  - PlayerLaser
   layers:
   - Default
   - TransparentFX

@@ -9,6 +9,7 @@ public class MoveEnemy : MonoBehaviour
     private float rotationSpeed;
     private float initialX;
     private float moveDirection;
+    private const string TAG_PLAYER_LASER = "PlayerLaser";
 
     // Start is called before the first frame update
     void Start()
@@ -33,5 +34,15 @@ public class MoveEnemy : MonoBehaviour
             transform.eulerAngles.x,
             transform.eulerAngles.y + rotationSpeed,
             transform.eulerAngles.z);
+    }
+
+    // Destroy enemy on collision with player laser.
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == TAG_PLAYER_LASER)
+        {
+            Destroy(other.gameObject);
+            Destroy(gameObject);
+        }
     }
 }

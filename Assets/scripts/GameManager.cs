@@ -19,12 +19,21 @@ public class GameManager : MonoBehaviour
     private int healthMediumIndex = 1;
     private int healthLowIndex = 2;
     public GameObject health;
+    public bool healthBonusSpawned;
+    private int maxIntervalTime = 15;
+    public GameObject healthBonusPrefab;
 
     // Start is called before the first frame update
     void Start()
     {
         CreateEnemies();
         UpdateHealthColor();
+
+        // Create health bonus at random time interval.
+        healthBonusSpawned = false;
+        float healthSpawnDelay = UnityEngine.Random.Range(0, maxIntervalTime);
+        float healthSpawnInterval = UnityEngine.Random.Range(0, maxIntervalTime);
+        InvokeRepeating("CreateHealthBonus", healthSpawnDelay, healthSpawnInterval);
     }
 
     // Function changing health indicator color based on amount of lives.
@@ -77,6 +86,20 @@ public class GameManager : MonoBehaviour
                 Vector3 currentEnemyPosition = new Vector3(enemyPositionX, enemyPositionY, enemyPositionZ);
                 Instantiate(enemyPrefab, currentEnemyPosition, Quaternion.Euler(90, 0, 0));
             }
+        }
+    }
+
+    // Creates health bonus if one isn't already created.
+    void CreateHealthBonus()
+    {
+        if (!healthBonusSpawned)
+        {
+            float xPosition = UnityEngine.Random.Range(-19, 19);
+            float zPosition = UnityEngine.Random.Range(-1, 4);
+            Vector3 healthBonusPosition = new Vector3(xPosition, healthBonusPrefab.transform.position.y, zPosition);
+
+            Instantiate(healthBonusPrefab, healthBonusPosition, Quaternion.Euler(90, 0, 0));
+            healthBonusSpawned = true;
         }
     }
 }

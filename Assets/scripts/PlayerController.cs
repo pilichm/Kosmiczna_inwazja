@@ -67,6 +67,7 @@ public class PlayerController : MonoBehaviour
         {
             Debug.Log("Health = " + gameManager.playerHealth);
             gameManager.playerHealth += 1;
+            gameManager.healthBonusSpawned = false;
             gameManager.UpdateHealthColor();
         }
 

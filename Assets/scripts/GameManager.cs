@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviour
     // Function changing health indicator color based on amount of lives.
     public void UpdateHealthColor()
     {
-        if (playerHealth == 3)
+        if (playerHealth >= 3)
         {
             health.GetComponent<Renderer>().material = healthColors[healthFullIndex];
         } else if (playerHealth == 2)

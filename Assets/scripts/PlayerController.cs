@@ -11,6 +11,8 @@ public class PlayerController : MonoBehaviour
     private float verticalBoundaryTop = 6.0f;
     private float verticalBoundaryBottom = -1.0f;
     private GameManager gameManager;
+    private const string TAG_ENEMY_LASER = "EnemyLaser";
+    private const string TAG_HEALTH_BONUS = "HealthBonus";
 
     // Start is called before the first frame update
     void Start()
@@ -50,8 +52,24 @@ public class PlayerController : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Collision");
-        gameManager.playerHealth -= 1;
-        gameManager.UpdateHealthColor();
+        Debug.Log("Collision " + other.gameObject.name);
+
+        // Decrease player health count after collsion with enemy laser.
+        if (other.gameObject.tag == TAG_ENEMY_LASER)
+        {
+            Debug.Log("Health = " + gameManager.playerHealth);
+            gameManager.playerHealth -= 1;
+            gameManager.UpdateHealthColor();
+        }
+
+        // Increase player health after collsion with health container.
+        if (other.gameObject.tag == TAG_HEALTH_BONUS)
+        {
+            Debug.Log("Health = " + gameManager.playerHealth);
+            gameManager.playerHealth += 1;
+            gameManager.UpdateHealthColor();
+        }
+
+        Destroy(other.gameObject);
     }
 }

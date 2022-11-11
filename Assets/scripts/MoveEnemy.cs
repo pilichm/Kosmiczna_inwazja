@@ -10,10 +10,14 @@ public class MoveEnemy : MonoBehaviour
     private float initialX;
     private float moveDirection;
     private const string TAG_PLAYER_LASER = "PlayerLaser";
+    public AudioClip explosionSound;
+    public GameManager gameManager;
 
     // Start is called before the first frame update
     void Start()
     {
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+
         // Randomise enemy movement - rotation, speed and direction.
         initialX = transform.position.x;
         moveDirection = UnityEngine.Random.Range(-1, 1);
@@ -41,6 +45,7 @@ public class MoveEnemy : MonoBehaviour
     {
         if (other.gameObject.tag == TAG_PLAYER_LASER)
         {
+            gameManager.gameAudio.PlayOneShot(explosionSound, 1.0f);
             Destroy(other.gameObject);
             Destroy(gameObject);
         }

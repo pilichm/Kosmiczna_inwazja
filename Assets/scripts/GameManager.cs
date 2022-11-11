@@ -23,9 +23,14 @@ public class GameManager : MonoBehaviour
     private int maxIntervalTime = 15;
     public GameObject healthBonusPrefab;
 
+    public AudioSource gameAudio;
+    public AudioClip laserSound;
+
     // Start is called before the first frame update
     void Start()
     {
+        gameAudio = GetComponent<AudioSource>();
+
         CreateEnemies();
         UpdateHealthColor();
 
@@ -57,6 +62,8 @@ public class GameManager : MonoBehaviour
         // Create player left and right laser.
         if (Input.GetKeyDown("space"))
         {
+            gameAudio.PlayOneShot(laserSound, 1.0f);
+
             Vector3 laserLeftPosition = new Vector3(
                 player.transform.position.x + laserOffsetHorizontal, 
                 defLaserPosition.y, 

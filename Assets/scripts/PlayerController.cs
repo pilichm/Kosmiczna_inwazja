@@ -13,11 +13,14 @@ public class PlayerController : MonoBehaviour
     private GameManager gameManager;
     private const string TAG_ENEMY_LASER = "EnemyLaser";
     private const string TAG_HEALTH_BONUS = "HealthBonus";
+    public AudioClip bunusPickedSound;
+    private AudioSource playerAudio;
 
     // Start is called before the first frame update
     void Start()
     {
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        playerAudio = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -66,6 +69,7 @@ public class PlayerController : MonoBehaviour
         if (other.gameObject.tag == TAG_HEALTH_BONUS)
         {
             Debug.Log("Health = " + gameManager.playerHealth);
+            playerAudio.PlayOneShot(bunusPickedSound, 1.0f);
             gameManager.playerHealth += 1;
             gameManager.healthBonusSpawned = false;
             gameManager.UpdateHealthColor();

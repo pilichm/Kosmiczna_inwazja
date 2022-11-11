@@ -55,12 +55,12 @@ public class PlayerController : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Collision " + other.gameObject.name);
+        //Debug.Log("Collision " + other.gameObject.name);
 
         // Decrease player health count after collsion with enemy laser.
         if (other.gameObject.tag == TAG_ENEMY_LASER)
         {
-            Debug.Log("Health = " + gameManager.playerHealth);
+            //Debug.Log("Health = " + gameManager.playerHealth);
             gameManager.playerHealth -= 1;
             gameManager.UpdateHealthColor();
         }
@@ -68,7 +68,7 @@ public class PlayerController : MonoBehaviour
         // Increase player health after collsion with health container.
         if (other.gameObject.tag == TAG_HEALTH_BONUS)
         {
-            Debug.Log("Health = " + gameManager.playerHealth);
+            //Debug.Log("Health = " + gameManager.playerHealth);
             playerAudio.PlayOneShot(bunusPickedSound, 1.0f);
             gameManager.playerHealth += 1;
             gameManager.healthBonusSpawned = false;

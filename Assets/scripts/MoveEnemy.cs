@@ -38,6 +38,7 @@ public class MoveEnemy : MonoBehaviour
             transform.eulerAngles.x,
             transform.eulerAngles.y + rotationSpeed,
             transform.eulerAngles.z);
+
     }
 
     // Destroy enemy on collision with player laser.
@@ -45,7 +46,7 @@ public class MoveEnemy : MonoBehaviour
     {
         if (other.gameObject.tag == TAG_PLAYER_LASER)
         {
-            gameManager.gameAudio.PlayOneShot(explosionSound, 1.0f);
+            gameManager.enemyDestroyed = true;
             Destroy(other.gameObject);
             Destroy(gameObject);
         }

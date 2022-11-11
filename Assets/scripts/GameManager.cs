@@ -25,6 +25,8 @@ public class GameManager : MonoBehaviour
 
     public AudioSource gameAudio;
     public AudioClip laserSound;
+    public AudioClip explosionSound;
+    public bool enemyDestroyed;
 
     // Start is called before the first frame update
     void Start()
@@ -36,6 +38,7 @@ public class GameManager : MonoBehaviour
 
         // Create health bonus at random time interval.
         healthBonusSpawned = false;
+        enemyDestroyed = false;
         float healthSpawnDelay = UnityEngine.Random.Range(0, maxIntervalTime);
         float healthSpawnInterval = UnityEngine.Random.Range(0, maxIntervalTime);
         InvokeRepeating("CreateHealthBonus", healthSpawnDelay, healthSpawnInterval);
@@ -53,6 +56,17 @@ public class GameManager : MonoBehaviour
         } else
         {
             health.GetComponent<Renderer>().material = healthColors[healthLowIndex];
+        }
+
+        if (enemyDestroyed)
+        {
+            if (gameAudio.isPlaying)
+            {
+                gameAudio.Stop();
+            }
+
+            gameAudio.PlayOneShot(explosionSound, 3.0f);
+            enemyDestroyed = false;
         }
     }
 

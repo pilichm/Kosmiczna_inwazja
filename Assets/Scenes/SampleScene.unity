@@ -775,7 +775,10 @@ MonoBehaviour:
   health: {fileID: 2058830934}
   healthBonusSpawned: 0
   healthBonusPrefab: {fileID: 7208199549652666614, guid: 41797499316ec8b4b946407ab1714a6c, type: 3}
-  laserSound: {fileID: 0}
+  gameAudio: {fileID: 0}
+  laserSound: {fileID: 8300000, guid: 512bd73a4204d5941915bbd23dbe328c, type: 3}
+  explosionSound: {fileID: 8300000, guid: 7317791229c45b843a7fa380913dbeb3, type: 3}
+  enemyDestroyed: 0
 --- !u!1 &2058830934
 GameObject:
   m_ObjectHideFlags: 0

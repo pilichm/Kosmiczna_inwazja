@@ -64,7 +64,7 @@ public class GameManager : MonoBehaviour
             {
                 gameAudio.Stop();
             }
-
+             
             gameAudio.PlayOneShot(explosionSound, 3.0f);
             enemyDestroyed = false;
         }
@@ -96,13 +96,21 @@ public class GameManager : MonoBehaviour
     // Create and position enemies when game starts
     void CreateEnemies()
     {
-        for (int i = 0; i < 4; i++)
+        float xOffset = 50.0f;
+        float yOffset = 0.0f;
+        float zOffset = 10.0f;
+        int numberOfRows = 4;
+        int numberOfCols = 15;
+
+        for (int i = 0; i < numberOfRows; i++)
         {
-            for (int j=0; j<15; j++)
+            xOffset = -xOffset;
+
+            for (int j=0; j< numberOfCols; j++)
             {
-                float enemyPositionX = -21 + j * 3;
-                float enemyPositionY = 0;
-                float enemyPositionZ = 10 + i * 3;
+                float enemyPositionX = xOffset - 21 + j * 3;
+                float enemyPositionY = yOffset;
+                float enemyPositionZ = zOffset + i * 3;
 
                 Vector3 currentEnemyPosition = new Vector3(enemyPositionX, enemyPositionY, enemyPositionZ);
                 Instantiate(enemyPrefab, currentEnemyPosition, Quaternion.Euler(90, 0, 0));

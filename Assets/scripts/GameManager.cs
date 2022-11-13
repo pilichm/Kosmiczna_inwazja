@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -28,10 +29,16 @@ public class GameManager : MonoBehaviour
     public AudioClip explosionSound;
     public bool enemyDestroyed;
 
+    private int currentScore;
+    private int valueToAddAfterOneHit = 10;
+    public Text scoreCountText;
+
     // Start is called before the first frame update
     void Start()
     {
         playerHealth = 6;
+        currentScore = 0;
+        scoreCountText.text = "Score: " + currentScore;
 
         gameAudio = GetComponent<AudioSource>();
 
@@ -132,5 +139,12 @@ public class GameManager : MonoBehaviour
             Instantiate(healthBonusPrefab, healthBonusPosition, Quaternion.Euler(90, 0, 0));
             healthBonusSpawned = true;
         }
+    }
+
+    // Adds 10 to users score after an enemy is hit.
+    public void updateScore()
+    {
+        currentScore += valueToAddAfterOneHit;
+        scoreCountText.text = "Score: " + currentScore;
     }
 }

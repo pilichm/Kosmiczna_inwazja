@@ -70,6 +70,7 @@ public class MoveEnemy : MonoBehaviour
         if (other.gameObject.tag == TAG_PLAYER_LASER)
         {
             gameManager.enemyDestroyed = true;
+            gameManager.updateScore();
             Destroy(other.gameObject);
             Destroy(gameObject);
         }

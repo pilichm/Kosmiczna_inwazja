@@ -32,11 +32,13 @@ public class GameManager : MonoBehaviour
     private int currentScore;
     private int valueToAddAfterOneHit = 10;
     public Text scoreCountText;
+    public RawImage gameOverScreen;
+    private float gameOverScreenYWhenVisible = 185.0f;
 
     // Start is called before the first frame update
     void Start()
     {
-        playerHealth = 6;
+        playerHealth = 1;
         currentScore = 0;
         scoreCountText.text = "Score: " + currentScore;
 
@@ -99,6 +101,14 @@ public class GameManager : MonoBehaviour
 
             Instantiate(laserPrefabs[leftLaserIndex], laserLeftPosition, Quaternion.Euler(90, 0, 0));
             Instantiate(laserPrefabs[rightLaserIndex], laserRightPosition, Quaternion.Euler(90, 0, 0));
+        }
+
+        if (playerHealth <= 0)
+        {
+            gameOverScreen.transform.position = new Vector3(
+                gameOverScreen.transform.position.x,
+                gameOverScreenYWhenVisible, 
+                gameOverScreen.transform.position.z);
         }
     }
 

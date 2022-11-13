@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
     private float laserOffsetHorizontal = 2.28f;
     public Material[] healthColors;
 
-    public int playerHealth = 3;
+    public int playerHealth;
     private int healthFullIndex = 0;
     private int healthMediumIndex = 1;
     private int healthLowIndex = 2;
@@ -31,6 +31,8 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        playerHealth = 6;
+
         gameAudio = GetComponent<AudioSource>();
 
         CreateEnemies();
@@ -47,10 +49,10 @@ public class GameManager : MonoBehaviour
     // Function changing health indicator color based on amount of lives.
     public void UpdateHealthColor()
     {
-        if (playerHealth >= 3)
+        if (playerHealth > 3)
         {
             health.GetComponent<Renderer>().material = healthColors[healthFullIndex];
-        } else if (playerHealth == 2)
+        } else if (playerHealth < 3 && playerHealth >= 1)
         {
             health.GetComponent<Renderer>().material = healthColors[healthMediumIndex];
         } else

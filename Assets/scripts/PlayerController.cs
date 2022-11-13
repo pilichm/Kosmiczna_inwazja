@@ -15,12 +15,14 @@ public class PlayerController : MonoBehaviour
     private const string TAG_HEALTH_BONUS = "HealthBonus";
     public AudioClip bunusPickedSound;
     private AudioSource playerAudio;
+    private List<int> enemyLasersAlreadyCollided;
 
     // Start is called before the first frame update
     void Start()
     {
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         playerAudio = GetComponent<AudioSource>();
+        enemyLasersAlreadyCollided = new List<int>();
     }
 
     // Update is called once per frame
@@ -55,20 +57,18 @@ public class PlayerController : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        //Debug.Log("Collision " + other.gameObject.name);
-
         // Decrease player health count after collsion with enemy laser.
         if (other.gameObject.tag == TAG_ENEMY_LASER)
         {
-            //Debug.Log("Health = " + gameManager.playerHealth);
+            if (!enemyLasersAlreadyCollided.Contains(other.gameObject.GetInstanceID()))
             gameManager.playerHealth -= 1;
             gameManager.UpdateHealthColor();
+            enemyLasersAlreadyCollided.Add(other.gameObject.GetInstanceID());
         }
 
         // Increase player health after collsion with health container.
         if (other.gameObject.tag == TAG_HEALTH_BONUS)
         {
-            //Debug.Log("Health = " + gameManager.playerHealth);
             playerAudio.PlayOneShot(bunusPickedSound, 1.0f);
             gameManager.playerHealth += 1;
             gameManager.healthBonusSpawned = false;
@@ -76,5 +76,6 @@ public class PlayerController : MonoBehaviour
         }
 
         Destroy(other.gameObject);
+        Debug.Log("Health = " + gameManager.playerHealth);
     }
 }

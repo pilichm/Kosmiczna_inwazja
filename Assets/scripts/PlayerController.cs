@@ -63,13 +63,14 @@ public class PlayerController : MonoBehaviour
             if (!enemyLasersAlreadyCollided.Contains(other.gameObject.GetInstanceID()))
             gameManager.playerHealth -= 1;
             gameManager.UpdateHealthColor();
+            gameManager.UpdateLifeTextAndColor();
             enemyLasersAlreadyCollided.Add(other.gameObject.GetInstanceID());
         }
 
         // Increase player health after collsion with health container.
         if (other.gameObject.tag == TAG_HEALTH_BONUS)
         {
-            playerAudio.PlayOneShot(bunusPickedSound, 1.0f);
+            playerAudio.PlayOneShot(bunusPickedSound, 0.1f);
             gameManager.playerHealth += 1;
             gameManager.healthBonusSpawned = false;
             gameManager.UpdateHealthColor();

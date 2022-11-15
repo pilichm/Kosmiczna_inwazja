@@ -35,10 +35,12 @@ public class GameManager : MonoBehaviour
     public RawImage gameOverScreen;
     private float gameOverScreenYWhenVisible = 185.0f;
 
+    public Text lifeCount;
+
     // Start is called before the first frame update
     void Start()
     {
-        playerHealth = 1;
+        playerHealth = 3;
         currentScore = 0;
         scoreCountText.text = "Score: " + currentScore;
 
@@ -156,5 +158,29 @@ public class GameManager : MonoBehaviour
     {
         currentScore += valueToAddAfterOneHit;
         scoreCountText.text = "Score: " + currentScore;
+    }
+
+    // Function updating life count text and color.
+    public void UpdateLifeTextAndColor()
+    {
+        if (playerHealth == 1)
+        {
+            lifeCount.text = playerHealth + " life!";
+            lifeCount.color = Color.red;
+        } else if (playerHealth > 2)
+        {
+            lifeCount.text = playerHealth + " lives!";
+            lifeCount.color = Color.green;
+        } else if (playerHealth > 0)
+        {
+            lifeCount.text = playerHealth + " lives!";
+            lifeCount.color = Color.yellow;
+        } else if (playerHealth < 0)
+        {
+            lifeCount.text = "0 lives!";
+        } else if (playerHealth == 0)
+        {
+            lifeCount.color = Color.black;
+        }
     }
 }

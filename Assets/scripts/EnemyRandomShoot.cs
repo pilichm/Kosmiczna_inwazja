@@ -5,11 +5,15 @@ using UnityEngine;
 public class EnemyRandomShoot : MonoBehaviour
 {
     public GameObject enemyLaserPrefab;
+
     private System.Random rnd;
+
     private int shootDelay;
     private int shootInterval;
     private int maxIntervalTime = 30;
+
     private AudioSource enemyAudio;
+
     public AudioClip laserSound;
 
     // Start is called before the first frame update

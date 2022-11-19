@@ -11,10 +11,14 @@ public class MoveEnemy : MonoBehaviour
     private float initialX;
     private float direction;
     private float moveDirection;
-    private const string TAG_PLAYER_LASER = "PlayerLaser";
-    public AudioClip explosionSound;
-    public GameManager gameManager;
     private float startDistabceToMove = 50.0f;
+
+    private const string TAG_PLAYER_LASER = "PlayerLaser";
+
+    public AudioClip explosionSound;
+
+    public GameManager gameManager;
+    
     private bool initialMovementEnded;
 
     // Start is called before the first frame update

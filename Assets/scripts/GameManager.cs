@@ -8,34 +8,40 @@ public class GameManager : MonoBehaviour
     public GameObject[] laserPrefabs;
     public GameObject player;
     public GameObject enemyPrefab;
-    private Vector3 defLaserPosition = new Vector3(2.25f, 0.014f, 2.795f);
-    private int leftLaserIndex = 0;
-    private int rightLaserIndex = 1;
-    private float laserOffsetForward = 3.0f;
-    private float laserOffsetHorizontal = 2.28f;
-    public Material[] healthColors;
+    public GameObject health;
+    public GameObject healthBonusPrefab;
 
     public int playerHealth;
+
+    private int leftLaserIndex = 0;
+    private int rightLaserIndex = 1;
     private int healthFullIndex = 0;
     private int healthMediumIndex = 1;
     private int healthLowIndex = 2;
-    public GameObject health;
-    public bool healthBonusSpawned;
     private int maxIntervalTime = 15;
-    public GameObject healthBonusPrefab;
-
-    public AudioSource gameAudio;
-    public AudioClip laserSound;
-    public AudioClip explosionSound;
-    public bool enemyDestroyed;
-
     private int currentScore;
     private int valueToAddAfterOneHit = 10;
-    public Text scoreCountText;
-    public RawImage gameOverScreen;
+
+    private float laserOffsetForward = 3.0f;
+    private float laserOffsetHorizontal = 2.28f;
     private float gameOverScreenYWhenVisible = 185.0f;
 
+    private Vector3 defLaserPosition = new Vector3(2.25f, 0.014f, 2.795f);
+    
+    public Material[] healthColors;
+    
+    public bool healthBonusSpawned;
+    public bool enemyDestroyed;
+
+    public AudioSource gameAudio;
+
+    public AudioClip laserSound;
+    public AudioClip explosionSound;
+
+    public Text scoreCountText;
     public Text lifeCount;
+
+    public RawImage gameOverScreen;
 
     // Start is called before the first frame update
     void Start()

@@ -1165,21 +1165,21 @@ MonoBehaviour:
   - {fileID: 1090681232347928360, guid: e3b876b6ae498584f951bea525515747, type: 3}
   player: {fileID: 1543012322}
   enemyPrefab: {fileID: 3644785812033950628, guid: 00a217cbeea96ca4fa237af7c657f17e, type: 3}
+  health: {fileID: 2058830934}
+  healthBonusPrefab: {fileID: 7208199549652666614, guid: 41797499316ec8b4b946407ab1714a6c, type: 3}
+  playerHealth: 3
   healthColors:
   - {fileID: 2100000, guid: 3c0979900dbcd1d4880a48587033209f, type: 2}
   - {fileID: 2100000, guid: 041abfc02b17d9b4d868a3919a5a15e9, type: 2}
   - {fileID: 2100000, guid: 4818362655eb0564897dd0bee72f1c06, type: 2}
-  playerHealth: 3
-  health: {fileID: 2058830934}
   healthBonusSpawned: 0
-  healthBonusPrefab: {fileID: 7208199549652666614, guid: 41797499316ec8b4b946407ab1714a6c, type: 3}
+  enemyDestroyed: 0
   gameAudio: {fileID: 0}
   laserSound: {fileID: 8300000, guid: 512bd73a4204d5941915bbd23dbe328c, type: 3}
   explosionSound: {fileID: 8300000, guid: 7317791229c45b843a7fa380913dbeb3, type: 3}
-  enemyDestroyed: 0
   scoreCountText: {fileID: 1730193020}
-  gameOverScreen: {fileID: 1816822742}
   lifeCount: {fileID: 1910039402}
+  gameOverScreen: {fileID: 1816822742}
 --- !u!1 &2058830934
 GameObject:
   m_ObjectHideFlags: 0
@@ -1289,7 +1289,7 @@ PrefabInstance:
     - target: {fileID: 2679858327090633739, guid: 94a764a818b8ec644ad9d335d97aa775, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: e4bb5f3cf28d8ad4a98da37b84ea1895, type: 2}
+      objectReference: {fileID: 2100000, guid: d262dfb9a16c69040b8da521e5b768ca, type: 2}
     - target: {fileID: 2679858327271000764, guid: 94a764a818b8ec644ad9d335d97aa775, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -1297,7 +1297,7 @@ PrefabInstance:
     - target: {fileID: 2679858327863961305, guid: 94a764a818b8ec644ad9d335d97aa775, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: e0fdc31fd4d8959498591ecf46a93121, type: 2}
+      objectReference: {fileID: 2100000, guid: fa98a908af032f543b500fe7961be0fb, type: 2}
     - target: {fileID: 2679858328074858369, guid: 94a764a818b8ec644ad9d335d97aa775, type: 3}
       propertyPath: m_Name
       value: Player

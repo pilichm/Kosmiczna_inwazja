@@ -22,8 +22,8 @@ public class GameManager : MonoBehaviour
     private int currentScore;
     private int valueToAddAfterOneHit = 10;
 
-    private float laserOffsetForward = 3.0f;
-    private float laserOffsetHorizontal = 2.28f;
+    private float laserOffsetForward = 3f;
+    private float laserOffsetHorizontal = 0.5f;
     private float gameOverScreenYWhenVisible = 185.0f;
 
     private Vector3 defLaserPosition = new Vector3(2.25f, 0.014f, 2.795f);
@@ -52,7 +52,7 @@ public class GameManager : MonoBehaviour
 
         gameAudio = GetComponent<AudioSource>();
 
-        CreateEnemies();
+        //CreateEnemies();
         UpdateHealthColor();
 
         // Create health bonus at random time interval.

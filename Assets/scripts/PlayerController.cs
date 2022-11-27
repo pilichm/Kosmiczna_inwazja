@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class PlayerController : MonoBehaviour
 {
@@ -11,8 +12,12 @@ public class PlayerController : MonoBehaviour
     private float horizontalBoundary = 18.0f;
     private float verticalBoundaryTop = 6.0f;
     private float verticalBoundaryBottom = -1.0f;
+    private float rotationSpeed = 50.0f;
+    private float maxWingRotation = 0.1f;
 
     private GameManager gameManager;
+
+    public GameObject playerWing;
 
     private const string TAG_ENEMY_LASER = "EnemyLaser";
     private const string TAG_HEALTH_BONUS = "HealthBonus";
@@ -59,6 +64,26 @@ public class PlayerController : MonoBehaviour
 
         transform.Translate(Vector3.right * horizontalInput * playerSpeed * Time.deltaTime);
         transform.Translate(Vector3.forward * verticalInput * playerSpeed * Time.deltaTime);
+
+        // Rotate player ship wing based on horizontal input.
+        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
+        {
+            if (Math.Abs(horizontalInput) > 0 && Math.Abs(playerWing.transform.rotation.z) <= maxWingRotation)
+            {
+                playerWing.transform.Rotate(new Vector3(0, 0, 10) * rotationSpeed * Time.deltaTime * horizontalInput * -1);
+            }
+        } else
+        {
+            if (playerWing.transform.rotation.z < 0)
+            {
+                playerWing.transform.Rotate(new Vector3(0, 0, 1) * rotationSpeed * Time.deltaTime);
+            }
+
+            if (playerWing.transform.rotation.z > 0)
+            {
+                playerWing.transform.Rotate(new Vector3(0, 0, -1) * rotationSpeed * Time.deltaTime);
+            }
+        }
     }
 
     void OnTriggerEnter(Collider other)

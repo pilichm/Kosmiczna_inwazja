@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     public GameObject enemyPrefab;
     public GameObject health;
     public GameObject healthBonusPrefab;
+    public GameObject barrierPrefab;
 
     public int playerHealth;
 
@@ -21,6 +22,7 @@ public class GameManager : MonoBehaviour
     private int maxIntervalTime = 15;
     private int currentScore;
     private int valueToAddAfterOneHit = 10;
+    private int maxBarrierPowerUpSpawnDelay = 20;
 
     private float laserOffsetForward = 3f;
     private float laserOffsetHorizontal = 0.5f;
@@ -54,6 +56,7 @@ public class GameManager : MonoBehaviour
 
         //CreateEnemies();
         UpdateHealthColor();
+        CreateBarrierPowerUp();
 
         // Create health bonus at random time interval.
         healthBonusSpawned = false;
@@ -145,18 +148,32 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private Vector3 getRandomPowerUpPosition()
+    {
+        float xPosition = UnityEngine.Random.Range(-19, 19);
+        float zPosition = UnityEngine.Random.Range(-1, 4);
+        return new Vector3(xPosition, healthBonusPrefab.transform.position.y, zPosition);
+    }
+
     // Creates health bonus if one isn't already created.
     void CreateHealthBonus()
     {
         if (!healthBonusSpawned)
         {
-            float xPosition = UnityEngine.Random.Range(-19, 19);
-            float zPosition = UnityEngine.Random.Range(-1, 4);
-            Vector3 healthBonusPosition = new Vector3(xPosition, healthBonusPrefab.transform.position.y, zPosition);
-
-            Instantiate(healthBonusPrefab, healthBonusPosition, Quaternion.Euler(90, 0, 0));
+            Instantiate(healthBonusPrefab, getRandomPowerUpPosition(), Quaternion.Euler(90, 0, 0));
             healthBonusSpawned = true;
         }
+    }
+
+    private void CreateBarrierPowerUp()
+    {
+        Instantiate(barrierPrefab, getRandomPowerUpPosition(), Quaternion.Euler(90, 0, 0));
+    }
+
+    public IEnumerator SpawnBarrierCountDownRoutine()
+    {
+        yield return new WaitForSeconds(UnityEngine.Random.Range(0, maxBarrierPowerUpSpawnDelay));
+        CreateBarrierPowerUp();
     }
 
     // Adds 10 to users score after an enemy is hit.

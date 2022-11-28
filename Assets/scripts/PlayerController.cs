@@ -18,9 +18,11 @@ public class PlayerController : MonoBehaviour
     private GameManager gameManager;
 
     public GameObject playerWing;
+    public GameObject playerBarrier;
 
     private const string TAG_ENEMY_LASER = "EnemyLaser";
     private const string TAG_HEALTH_BONUS = "HealthBonus";
+    private const string TAG_BARRIER = "Barrier";
 
     public AudioClip bunusPickedSound;
 
@@ -28,12 +30,15 @@ public class PlayerController : MonoBehaviour
 
     private List<int> enemyLasersAlreadyCollided;
 
+    private int barrierActiveTime = 5;
+
     // Start is called before the first frame update
     void Start()
     {
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         playerAudio = GetComponent<AudioSource>();
         enemyLasersAlreadyCollided = new List<int>();
+        playerBarrier.SetActive(false);
     }
 
     // Update is called once per frame
@@ -70,7 +75,7 @@ public class PlayerController : MonoBehaviour
         {
             if (Math.Abs(horizontalInput) > 0 && Math.Abs(playerWing.transform.rotation.z) <= maxWingRotation)
             {
-                playerWing.transform.Rotate(new Vector3(0, 0, 10) * rotationSpeed * Time.deltaTime * horizontalInput * -1);
+                playerWing.transform.Rotate(new Vector3(0, 0, 10) * rotationSpeed * Time.deltaTime * horizontalInput);
             }
         } else
         {
@@ -89,7 +94,7 @@ public class PlayerController : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         // Decrease player health count after collsion with enemy laser.
-        if (other.gameObject.tag == TAG_ENEMY_LASER)
+        if (other.gameObject.tag == TAG_ENEMY_LASER && !playerBarrier.activeSelf)
         {
             if (!enemyLasersAlreadyCollided.Contains(other.gameObject.GetInstanceID()))
             gameManager.playerHealth -= 1;
@@ -107,7 +112,21 @@ public class PlayerController : MonoBehaviour
             gameManager.UpdateHealthColor();
         }
 
+        // Pick up barrier power up.
+        if (other.gameObject.tag == TAG_BARRIER)
+        {
+            playerBarrier.SetActive(true);
+            StartCoroutine(BarrierCountDownRoutine());
+        }
+
         Destroy(other.gameObject);
         Debug.Log("Health = " + gameManager.playerHealth);
+    }
+
+    IEnumerator BarrierCountDownRoutine()
+    {
+        yield return new WaitForSeconds(barrierActiveTime);
+        playerBarrier.SetActive(false);
+        StartCoroutine(gameManager.SpawnBarrierCountDownRoutine());
     }
 }

@@ -425,36 +425,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 2679858327090633736, guid: 94a764a818b8ec644ad9d335d97aa775, type: 3}
   m_PrefabInstance: {fileID: 2679858327397619800}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &702921172
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 702921173}
-  m_Layer: 0
-  m_Name: GameObject
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &702921173
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 702921172}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -19, y: 4.071238, z: 17.293869}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 7
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &703046643
 GameObject:
   m_ObjectHideFlags: 0
@@ -2033,6 +2003,7 @@ MonoBehaviour:
   enemyPrefab: {fileID: 3644785812033950628, guid: 00a217cbeea96ca4fa237af7c657f17e, type: 3}
   health: {fileID: 2058830934}
   healthBonusPrefab: {fileID: 7208199549652666614, guid: 41797499316ec8b4b946407ab1714a6c, type: 3}
+  barrierPrefab: {fileID: 4933266639627414318, guid: 77464ed990fcedd439240b628ca7c95a, type: 3}
   playerHealth: 3
   healthColors:
   - {fileID: 2100000, guid: 3c0979900dbcd1d4880a48587033209f, type: 2}
@@ -2214,7 +2185,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2679858328074858370, guid: 94a764a818b8ec644ad9d335d97aa775, type: 3}
       propertyPath: m_RootOrder
-      value: 8
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 2679858328074858370, guid: 94a764a818b8ec644ad9d335d97aa775, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2264,6 +2235,10 @@ PrefabInstance:
       propertyPath: playerWing
       value: 
       objectReference: {fileID: 838960184}
+    - target: {fileID: 2679858328074858371, guid: 94a764a818b8ec644ad9d335d97aa775, type: 3}
+      propertyPath: playerBarrier
+      value: 
+      objectReference: {fileID: 1458199758}
     - target: {fileID: 2679858328074858371, guid: 94a764a818b8ec644ad9d335d97aa775, type: 3}
       propertyPath: playerCanonLeft
       value: 

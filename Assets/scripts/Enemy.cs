@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MoveEnemy : MonoBehaviour
+public class Enemy : MonoBehaviour
 {
     private float horizontalMoveBoundary = 10.0f;
     private float initialMoveSpeed;
@@ -12,6 +12,7 @@ public class MoveEnemy : MonoBehaviour
     private float direction;
     private float moveDirection;
     private float startDistabceToMove = 50.0f;
+    private float downwardSpeed = 10.0f;
 
     private const string TAG_PLAYER_LASER = "PlayerLaser";
 
@@ -20,6 +21,8 @@ public class MoveEnemy : MonoBehaviour
     public GameManager gameManager;
     
     private bool initialMovementEnded;
+
+    public GameObject player;
 
     // Start is called before the first frame update
     void Start()
@@ -53,18 +56,27 @@ public class MoveEnemy : MonoBehaviour
     {
         float distance = System.Math.Abs(transform.position.x - initialX);
 
-        if (System.Math.Abs(distance) < startDistabceToMove && !initialMovementEnded)
+        if (!gameManager.moreThanHalfEnemiesAreDestroyed)
         {
-            transform.Translate(direction * Vector3.right * initialMoveSpeed * Time.deltaTime);
+            if (System.Math.Abs(distance) < startDistabceToMove && !initialMovementEnded)
+            {
+                transform.Translate(direction * Vector3.right * initialMoveSpeed * Time.deltaTime);
+            }
+            else
+            {
+                initialMovementEnded = true;
+
+                transform.Translate(1 * Vector3.right * moveSpeed * Time.deltaTime);
+                transform.eulerAngles = new Vector3(
+                    transform.eulerAngles.x,
+                    transform.eulerAngles.y + rotationSpeed,
+                    transform.eulerAngles.z);
+            }
         } else
         {
-            initialMovementEnded = true;
-
-            transform.Translate(1 * Vector3.right * moveSpeed * Time.deltaTime);
-            transform.eulerAngles = new Vector3(
-                transform.eulerAngles.x,
-                transform.eulerAngles.y + rotationSpeed,
-                transform.eulerAngles.z);
+            Vector3 directionTowardsPlayer = (player.transform.position - transform.position).normalized;
+            transform.Translate(directionTowardsPlayer * downwardSpeed * Time.deltaTime);
+            transform.rotation = player.transform.rotation;
         }
     }
 

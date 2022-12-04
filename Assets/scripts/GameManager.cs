@@ -23,6 +23,9 @@ public class GameManager : MonoBehaviour
     private int currentScore;
     private int valueToAddAfterOneHit = 10;
     private int maxBarrierPowerUpSpawnDelay = 20;
+    private int numberOfRows = 4;
+    private int numberOfCols = 15;
+    private int enemyCount;
 
     private float laserOffsetForward = 3f;
     private float laserOffsetHorizontal = 0.5f;
@@ -34,6 +37,7 @@ public class GameManager : MonoBehaviour
     
     public bool healthBonusSpawned;
     public bool enemyDestroyed;
+    public bool moreThanHalfEnemiesAreDestroyed;
 
     public AudioSource gameAudio;
 
@@ -54,16 +58,30 @@ public class GameManager : MonoBehaviour
 
         gameAudio = GetComponent<AudioSource>();
 
-        //CreateEnemies();
+        CreateEnemies();
         UpdateHealthColor();
         CreateBarrierPowerUp();
 
         // Create health bonus at random time interval.
         healthBonusSpawned = false;
         enemyDestroyed = false;
+        moreThanHalfEnemiesAreDestroyed = true;
+
         float healthSpawnDelay = UnityEngine.Random.Range(0, maxIntervalTime);
         float healthSpawnInterval = UnityEngine.Random.Range(0, maxIntervalTime);
         InvokeRepeating("CreateHealthBonus", healthSpawnDelay, healthSpawnInterval);
+    }
+
+    // Make enemies move downwards toward player ships when more than half enemies are destroyed.
+    void CheckMoreThanHalfEnemiesAreDestroyed()
+    {
+        enemyCount = FindObjectsOfType<Enemy>().Length;
+        int maxNumberOfEnemies = numberOfCols * numberOfRows;
+
+        if (enemyCount < (maxNumberOfEnemies / 2))
+        {
+            moreThanHalfEnemiesAreDestroyed = false;
+        }
     }
 
     // Function changing health indicator color based on amount of lives.
@@ -121,6 +139,8 @@ public class GameManager : MonoBehaviour
                 gameOverScreenYWhenVisible, 
                 gameOverScreen.transform.position.z);
         }
+
+        CheckMoreThanHalfEnemiesAreDestroyed();
     }
 
     // Create and position enemies when game starts
@@ -129,8 +149,6 @@ public class GameManager : MonoBehaviour
         float xOffset = 50.0f;
         float yOffset = 0.0f;
         float zOffset = 10.0f;
-        int numberOfRows = 4;
-        int numberOfCols = 15;
 
         for (int i = 0; i < numberOfRows; i++)
         {

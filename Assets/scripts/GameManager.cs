@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviour
     private int healthLowIndex = 2;
     private int maxIntervalTime = 15;
     private int currentScore;
-    private int valueToAddAfterOneHit = 10;
+    private int valueToAddAfterOneHit = 1;
     private int maxBarrierPowerUpSpawnDelay = 20;
     private int numberOfRows = 4;
     private int numberOfCols = 15;
@@ -198,7 +198,7 @@ public class GameManager : MonoBehaviour
     public void updateScore()
     {
         currentScore += valueToAddAfterOneHit;
-        scoreCountText.text = "Score: " + currentScore;
+        scoreCountText.text = "Score: " + currentScore + " of " + (numberOfCols * numberOfRows) + " destroyed!";
     }
 
     // Function updating life count text and color.

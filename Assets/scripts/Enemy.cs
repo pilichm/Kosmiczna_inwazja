@@ -21,8 +21,12 @@ public class Enemy : MonoBehaviour
     public GameManager gameManager;
     
     private bool initialMovementEnded;
+    private bool downwardMovementDelayEnded;
+    private bool delayStarted;
 
     public GameObject player;
+
+    private int maxDelayBeforeDownwardMovement = 300;
 
     // Start is called before the first frame update
     void Start()
@@ -36,6 +40,8 @@ public class Enemy : MonoBehaviour
         initialMoveSpeed = UnityEngine.Random.Range(10, 20);
         rotationSpeed = UnityEngine.Random.Range(1, 10);
         initialMovementEnded = false;
+        downwardMovementDelayEnded = false;
+        delayStarted = false;
 
         if (moveDirection < 0)
         {
@@ -56,7 +62,13 @@ public class Enemy : MonoBehaviour
     {
         float distance = System.Math.Abs(transform.position.x - initialX);
 
-        if (!gameManager.moreThanHalfEnemiesAreDestroyed)
+        if (!gameManager.moreThanHalfEnemiesAreDestroyed && !delayStarted)
+        {
+            delayStarted = true;
+            StartCoroutine(StartMovingTowardPlayerAfterRandomTime());
+        }
+
+        if (!downwardMovementDelayEnded)
         {
             if (System.Math.Abs(distance) < startDistabceToMove && !initialMovementEnded)
             {
@@ -90,5 +102,12 @@ public class Enemy : MonoBehaviour
             Destroy(other.gameObject);
             Destroy(gameObject);
         }
+    }
+
+    // Start moving toward player ship when more than half enemies are destroyed and random time has passed.
+    IEnumerator StartMovingTowardPlayerAfterRandomTime()
+    {
+        yield return new WaitForSeconds(UnityEngine.Random.Range(0, maxDelayBeforeDownwardMovement));
+        downwardMovementDelayEnded = true;
     }
 }

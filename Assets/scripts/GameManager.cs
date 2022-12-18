@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using TMPro;
 
 public class GameManager : MonoBehaviour
@@ -147,8 +148,13 @@ public class GameManager : MonoBehaviour
         // Pause game on P key pressed. Resume on second click.
         if (Input.GetKeyDown(KeyCode.P))
         {
-            isPaused = !isPaused;
-            pause.gameObject.SetActive(isPaused);
+            PauseGame();
+        }
+
+        // Restart game when R is pressed.
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            RestartGame();
         }
     }
 
@@ -235,5 +241,19 @@ public class GameManager : MonoBehaviour
         {
             lifeCount.color = Color.black;
         }
+    }
+
+    // Stop game, it can be resumed.
+    public void PauseGame()
+    {
+        isPaused = !isPaused;
+        pause.gameObject.SetActive(isPaused);
+    }
+
+    // Restart game by reloading whole scene.
+    public void RestartGame()
+    {
+        PauseGame();
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }

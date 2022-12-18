@@ -44,49 +44,53 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        horizontalInput = Input.GetAxis("Horizontal");
-        verticalInput = Input.GetAxis("Vertical");
-
-        if (transform.position.x < -horizontalBoundary)
+        if (!gameManager.isPaused)
         {
-            transform.position = new Vector3(-horizontalBoundary, transform.position.y, transform.position.z);
-        }
+            horizontalInput = Input.GetAxis("Horizontal");
+            verticalInput = Input.GetAxis("Vertical");
 
-        if (transform.position.x > horizontalBoundary)
-        {
-            transform.position = new Vector3(horizontalBoundary, transform.position.y, transform.position.z);
-        }
-
-        if (transform.position.z < verticalBoundaryBottom)
-        {
-            transform.position = new Vector3(transform.position.x, transform.position.y, verticalBoundaryBottom);
-        }
-
-        if (transform.position.z > verticalBoundaryTop)
-        {
-            transform.position = new Vector3(transform.position.x, transform.position.y, verticalBoundaryTop);
-        }
-
-        transform.Translate(Vector3.right * horizontalInput * playerSpeed * Time.deltaTime);
-        transform.Translate(Vector3.forward * verticalInput * playerSpeed * Time.deltaTime);
-
-        // Rotate player ship wing based on horizontal input.
-        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
-        {
-            if (Math.Abs(horizontalInput) > 0 && Math.Abs(playerWing.transform.rotation.z) <= maxWingRotation)
+            if (transform.position.x < -horizontalBoundary)
             {
-                playerWing.transform.Rotate(new Vector3(0, 0, 10) * rotationSpeed * Time.deltaTime * horizontalInput);
-            }
-        } else
-        {
-            if (playerWing.transform.rotation.z < 0)
-            {
-                playerWing.transform.Rotate(new Vector3(0, 0, 1) * rotationSpeed * Time.deltaTime);
+                transform.position = new Vector3(-horizontalBoundary, transform.position.y, transform.position.z);
             }
 
-            if (playerWing.transform.rotation.z > 0)
+            if (transform.position.x > horizontalBoundary)
             {
-                playerWing.transform.Rotate(new Vector3(0, 0, -1) * rotationSpeed * Time.deltaTime);
+                transform.position = new Vector3(horizontalBoundary, transform.position.y, transform.position.z);
+            }
+
+            if (transform.position.z < verticalBoundaryBottom)
+            {
+                transform.position = new Vector3(transform.position.x, transform.position.y, verticalBoundaryBottom);
+            }
+
+            if (transform.position.z > verticalBoundaryTop)
+            {
+                transform.position = new Vector3(transform.position.x, transform.position.y, verticalBoundaryTop);
+            }
+
+            transform.Translate(Vector3.right * horizontalInput * playerSpeed * Time.deltaTime);
+            transform.Translate(Vector3.forward * verticalInput * playerSpeed * Time.deltaTime);
+
+            // Rotate player ship wing based on horizontal input.
+            if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
+            {
+                if (Math.Abs(horizontalInput) > 0 && Math.Abs(playerWing.transform.rotation.z) <= maxWingRotation)
+                {
+                    playerWing.transform.Rotate(new Vector3(0, 0, 10) * rotationSpeed * Time.deltaTime * horizontalInput);
+                }
+            }
+            else
+            {
+                if (playerWing.transform.rotation.z < 0)
+                {
+                    playerWing.transform.Rotate(new Vector3(0, 0, 1) * rotationSpeed * Time.deltaTime);
+                }
+
+                if (playerWing.transform.rotation.z > 0)
+                {
+                    playerWing.transform.Rotate(new Vector3(0, 0, -1) * rotationSpeed * Time.deltaTime);
+                }
             }
         }
     }

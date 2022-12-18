@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
@@ -38,6 +39,7 @@ public class GameManager : MonoBehaviour
     public bool healthBonusSpawned;
     public bool enemyDestroyed;
     public bool moreThanHalfEnemiesAreDestroyed;
+    public bool isPaused;
 
     public AudioSource gameAudio;
 
@@ -46,6 +48,7 @@ public class GameManager : MonoBehaviour
 
     public Text scoreCountText;
     public Text lifeCount;
+    public TextMeshProUGUI pause;
 
     public RawImage gameOverScreen;
 
@@ -66,6 +69,7 @@ public class GameManager : MonoBehaviour
         healthBonusSpawned = false;
         enemyDestroyed = false;
         moreThanHalfEnemiesAreDestroyed = true;
+        isPaused = false;
 
         float healthSpawnDelay = UnityEngine.Random.Range(0, maxIntervalTime);
         float healthSpawnInterval = UnityEngine.Random.Range(0, maxIntervalTime);
@@ -114,7 +118,7 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         // Create player left and right laser.
-        if (Input.GetKeyDown("space"))
+        if (Input.GetKeyDown("space") && !isPaused)
         {
             gameAudio.PlayOneShot(laserSound, 1.0f);
 
@@ -132,15 +136,20 @@ public class GameManager : MonoBehaviour
             Instantiate(laserPrefabs[rightLaserIndex], laserRightPosition, Quaternion.Euler(90, 0, 0));
         }
 
-        if (playerHealth <= 0)
+        if (playerHealth <= 0 && !isPaused)
         {
-            gameOverScreen.transform.position = new Vector3(
-                gameOverScreen.transform.position.x,
-                gameOverScreenYWhenVisible, 
-                gameOverScreen.transform.position.z);
+            gameOverScreen.gameObject.SetActive(true);
+            isPaused = true;
         }
 
         CheckMoreThanHalfEnemiesAreDestroyed();
+
+        // Pause game on P key pressed. Resume on second click.
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            isPaused = !isPaused;
+            pause.gameObject.SetActive(isPaused);
+        }
     }
 
     // Create and position enemies when game starts
@@ -176,7 +185,7 @@ public class GameManager : MonoBehaviour
     // Creates health bonus if one isn't already created.
     void CreateHealthBonus()
     {
-        if (!healthBonusSpawned)
+        if (!healthBonusSpawned && !isPaused)
         {
             Instantiate(healthBonusPrefab, getRandomPowerUpPosition(), Quaternion.Euler(90, 0, 0));
             healthBonusSpawned = true;
@@ -185,7 +194,10 @@ public class GameManager : MonoBehaviour
 
     private void CreateBarrierPowerUp()
     {
-        Instantiate(barrierPrefab, getRandomPowerUpPosition(), Quaternion.Euler(90, 0, 0));
+        if (!isPaused)
+        {
+            Instantiate(barrierPrefab, getRandomPowerUpPosition(), Quaternion.Euler(90, 0, 0));
+        }   
     }
 
     public IEnumerator SpawnBarrierCountDownRoutine()

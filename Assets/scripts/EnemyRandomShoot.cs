@@ -6,6 +6,8 @@ public class EnemyRandomShoot : MonoBehaviour
 {
     public GameObject enemyLaserPrefab;
 
+    public GameManager gameManager;
+
     private System.Random rnd;
 
     private int shootDelay;
@@ -20,6 +22,7 @@ public class EnemyRandomShoot : MonoBehaviour
     void Start()
     {
         // Randomise time when enemy starts shooting and delay between each shot.
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         shootDelay = UnityEngine.Random.Range(0, maxIntervalTime);
         shootInterval = UnityEngine.Random.Range(0, maxIntervalTime);
         InvokeRepeating("Shoot", shootDelay, shootInterval);
@@ -35,7 +38,10 @@ public class EnemyRandomShoot : MonoBehaviour
     // Make enemy shoot laser down the screen.
     void Shoot()
     {
-        enemyAudio.PlayOneShot(laserSound, 0.1f);
-        Instantiate(enemyLaserPrefab, transform.position, Quaternion.Euler(90, 0, 0));
+        if (!gameManager.isPaused)
+        {
+            enemyAudio.PlayOneShot(laserSound, 0.1f);
+            Instantiate(enemyLaserPrefab, transform.position, Quaternion.Euler(90, 0, 0));
+        }
     }
 }

@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    private float horizontalMoveBoundary = 10.0f;
     private float initialMoveSpeed;
     private float moveSpeed;
     private float rotationSpeed;
@@ -60,35 +59,40 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float distance = System.Math.Abs(transform.position.x - initialX);
-
-        if (!gameManager.moreThanHalfEnemiesAreDestroyed && !delayStarted)
+        if (!gameManager.isPaused)
         {
-            delayStarted = true;
-            StartCoroutine(StartMovingTowardPlayerAfterRandomTime());
-        }
+            float distance = System.Math.Abs(transform.position.x - initialX);
 
-        if (!downwardMovementDelayEnded)
-        {
-            if (System.Math.Abs(distance) < startDistabceToMove && !initialMovementEnded)
+            if (!gameManager.moreThanHalfEnemiesAreDestroyed && !delayStarted)
             {
-                transform.Translate(direction * Vector3.right * initialMoveSpeed * Time.deltaTime);
+                delayStarted = true;
+                StartCoroutine(StartMovingTowardPlayerAfterRandomTime());
+            }
+
+            if (!downwardMovementDelayEnded)
+            {
+                if (System.Math.Abs(distance) < startDistabceToMove && !initialMovementEnded)
+                {
+                    transform.Translate(direction * Vector3.right * initialMoveSpeed * Time.deltaTime);
+                }
+                else
+                {
+                    initialMovementEnded = true;
+
+                    transform.Translate(1 * Vector3.right * moveSpeed * Time.deltaTime);
+                    transform.eulerAngles = new Vector3(
+                        transform.eulerAngles.x,
+                        transform.eulerAngles.y + rotationSpeed,
+                        transform.eulerAngles.z);
+                }
             }
             else
             {
-                initialMovementEnded = true;
+                Vector3 directionTowardsPlayer = (player.transform.position - transform.position).normalized;
+                transform.Translate(directionTowardsPlayer * downwardSpeed * Time.deltaTime);
+                transform.rotation = player.transform.rotation;
 
-                transform.Translate(1 * Vector3.right * moveSpeed * Time.deltaTime);
-                transform.eulerAngles = new Vector3(
-                    transform.eulerAngles.x,
-                    transform.eulerAngles.y + rotationSpeed,
-                    transform.eulerAngles.z);
             }
-        } else
-        {
-            Vector3 directionTowardsPlayer = (player.transform.position - transform.position).normalized;
-            transform.Translate(directionTowardsPlayer * downwardSpeed * Time.deltaTime);
-            transform.rotation = player.transform.rotation;
         }
     }
 

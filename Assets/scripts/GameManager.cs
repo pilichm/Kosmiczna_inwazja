@@ -28,6 +28,7 @@ public class GameManager : MonoBehaviour
     private int numberOfRows = 4;
     private int numberOfCols = 15;
     private int enemyCount;
+    private int difficulty = 3;
 
     private float laserOffsetForward = 3f;
     private float laserOffsetHorizontal = 0.5f;
@@ -56,25 +57,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        playerHealth = 3;
-        currentScore = 0;
-        scoreCountText.text = "Score: " + currentScore;
-
-        gameAudio = GetComponent<AudioSource>();
-
-        CreateEnemies();
-        UpdateHealthColor();
-        CreateBarrierPowerUp();
-
-        // Create health bonus at random time interval.
-        healthBonusSpawned = false;
-        enemyDestroyed = false;
-        moreThanHalfEnemiesAreDestroyed = true;
-        isPaused = false;
-
-        float healthSpawnDelay = UnityEngine.Random.Range(0, maxIntervalTime);
-        float healthSpawnInterval = UnityEngine.Random.Range(0, maxIntervalTime);
-        InvokeRepeating("CreateHealthBonus", healthSpawnDelay, healthSpawnInterval);
+        StartGame();
     }
 
     // Make enemies move downwards toward player ships when more than half enemies are destroyed.
@@ -171,12 +154,15 @@ public class GameManager : MonoBehaviour
 
             for (int j=0; j< numberOfCols; j++)
             {
-                float enemyPositionX = xOffset - 21 + j * 3;
-                float enemyPositionY = yOffset;
-                float enemyPositionZ = zOffset + i * 3;
+                if (j%difficulty==0)
+                {
+                    float enemyPositionX = xOffset - 21 + j * 3;
+                    float enemyPositionY = yOffset;
+                    float enemyPositionZ = zOffset + i * 3;
 
-                Vector3 currentEnemyPosition = new Vector3(enemyPositionX, enemyPositionY, enemyPositionZ);
-                Instantiate(enemyPrefab, currentEnemyPosition, Quaternion.Euler(90, 0, 0));
+                    Vector3 currentEnemyPosition = new Vector3(enemyPositionX, enemyPositionY, enemyPositionZ);
+                    Instantiate(enemyPrefab, currentEnemyPosition, Quaternion.Euler(90, 0, 0));
+                }
             }
         }
     }
@@ -255,5 +241,41 @@ public class GameManager : MonoBehaviour
     {
         PauseGame();
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    /*
+     * Method for setting difficulty, 1 is hardest, 3 is easiest.
+     * Also increases time between respawning of power ups and decreases time barrier is active.
+     */
+    public void SetDifficulty(int difficultyLevel)
+    {
+        difficulty = difficultyLevel;
+        maxIntervalTime *= difficultyLevel;
+    }
+
+    /*
+     * Method for starting the game.
+     */
+    public void StartGame()
+    {
+        playerHealth = 3;
+        currentScore = 0;
+        scoreCountText.text = "Score: " + currentScore;
+
+        gameAudio = GetComponent<AudioSource>();
+
+        CreateEnemies();
+        UpdateHealthColor();
+        CreateBarrierPowerUp();
+
+        // Create health bonus at random time interval.
+        healthBonusSpawned = false;
+        enemyDestroyed = false;
+        moreThanHalfEnemiesAreDestroyed = true;
+        isPaused = false;
+
+        float healthSpawnDelay = UnityEngine.Random.Range(0, maxIntervalTime);
+        float healthSpawnInterval = UnityEngine.Random.Range(0, maxIntervalTime);
+        InvokeRepeating("CreateHealthBonus", healthSpawnDelay, healthSpawnInterval);
     }
 }

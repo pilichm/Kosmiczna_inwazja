@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     public GameObject health;
     public GameObject healthBonusPrefab;
     public GameObject barrierPrefab;
+    public GameObject mainMenuScreen;
 
     public int playerHealth;
 
@@ -42,6 +43,7 @@ public class GameManager : MonoBehaviour
     public bool enemyDestroyed;
     public bool moreThanHalfEnemiesAreDestroyed;
     public bool isPaused;
+    public bool gameStartedFromButton = false;
 
     public AudioSource gameAudio;
 
@@ -57,7 +59,6 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        StartGame();
     }
 
     // Make enemies move downwards toward player ships when more than half enemies are destroyed.
@@ -101,43 +102,46 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // Create player left and right laser.
-        if (Input.GetKeyDown("space") && !isPaused)
+        if (gameStartedFromButton)
         {
-            gameAudio.PlayOneShot(laserSound, 1.0f);
+            // Create player left and right laser.
+            if (Input.GetKeyDown("space") && !isPaused)
+            {
+                gameAudio.PlayOneShot(laserSound, 1.0f);
 
-            Vector3 laserLeftPosition = new Vector3(
-                player.transform.position.x + laserOffsetHorizontal, 
-                defLaserPosition.y, 
-                player.transform.position.z + laserOffsetForward);
+                Vector3 laserLeftPosition = new Vector3(
+                    player.transform.position.x + laserOffsetHorizontal,
+                    defLaserPosition.y,
+                    player.transform.position.z + laserOffsetForward);
 
-            Vector3 laserRightPosition = new Vector3(
-                player.transform.position.x - laserOffsetHorizontal, 
-                defLaserPosition.y, 
-                player.transform.position.z + laserOffsetForward);
+                Vector3 laserRightPosition = new Vector3(
+                    player.transform.position.x - laserOffsetHorizontal,
+                    defLaserPosition.y,
+                    player.transform.position.z + laserOffsetForward);
 
-            Instantiate(laserPrefabs[leftLaserIndex], laserLeftPosition, Quaternion.Euler(90, 0, 0));
-            Instantiate(laserPrefabs[rightLaserIndex], laserRightPosition, Quaternion.Euler(90, 0, 0));
-        }
+                Instantiate(laserPrefabs[leftLaserIndex], laserLeftPosition, Quaternion.Euler(90, 0, 0));
+                Instantiate(laserPrefabs[rightLaserIndex], laserRightPosition, Quaternion.Euler(90, 0, 0));
+            }
 
-        if (playerHealth <= 0 && !isPaused)
-        {
-            gameOverScreen.gameObject.SetActive(true);
-            isPaused = true;
-        }
+            if (playerHealth <= 0 && !isPaused)
+            {
+                gameOverScreen.gameObject.SetActive(true);
+                isPaused = true;
+            }
 
-        CheckMoreThanHalfEnemiesAreDestroyed();
+            CheckMoreThanHalfEnemiesAreDestroyed();
 
-        // Pause game on P key pressed. Resume on second click.
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            PauseGame();
-        }
+            // Pause game on P key pressed. Resume on second click.
+            if (Input.GetKeyDown(KeyCode.P))
+            {
+                PauseGame();
+            }
 
-        // Restart game when R is pressed.
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            RestartGame();
+            // Restart game when R is pressed.
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                RestartGame();
+            }
         }
     }
 
@@ -247,7 +251,7 @@ public class GameManager : MonoBehaviour
      * Method for setting difficulty, 1 is hardest, 3 is easiest.
      * Also increases time between respawning of power ups and decreases time barrier is active.
      */
-    public void SetDifficulty(int difficultyLevel)
+    void SetDifficulty(int difficultyLevel)
     {
         difficulty = difficultyLevel;
         maxIntervalTime *= difficultyLevel;
@@ -256,8 +260,16 @@ public class GameManager : MonoBehaviour
     /*
      * Method for starting the game.
      */
-    public void StartGame()
+    public void StartGame(int difficultyLevel)
     {
+        SetDifficulty(difficultyLevel);
+
+        mainMenuScreen.SetActive(false);
+        player.SetActive(true);
+        scoreCountText.gameObject.SetActive(true);
+        lifeCount.gameObject.SetActive(true);
+        health.SetActive(true);
+
         playerHealth = 3;
         currentScore = 0;
         scoreCountText.text = "Score: " + currentScore;
@@ -273,6 +285,7 @@ public class GameManager : MonoBehaviour
         enemyDestroyed = false;
         moreThanHalfEnemiesAreDestroyed = true;
         isPaused = false;
+        gameStartedFromButton = true;
 
         float healthSpawnDelay = UnityEngine.Random.Range(0, maxIntervalTime);
         float healthSpawnInterval = UnityEngine.Random.Range(0, maxIntervalTime);

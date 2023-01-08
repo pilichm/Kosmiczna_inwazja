@@ -38,7 +38,7 @@ public class EnemyRandomShoot : MonoBehaviour
     // Make enemy shoot laser down the screen.
     void Shoot()
     {
-        if (!gameManager.isPaused)
+        if (!gameManager.isPaused && !gameManager.gameStartedFromButton)
         {
             enemyAudio.PlayOneShot(laserSound, 0.1f);
             Instantiate(enemyLaserPrefab, transform.position, Quaternion.Euler(90, 0, 0));

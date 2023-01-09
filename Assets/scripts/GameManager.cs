@@ -55,6 +55,7 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI pause;
 
     public RawImage gameOverScreen;
+    public RawImage gameLogo;
 
     // Start is called before the first frame update
     void Start()
@@ -277,6 +278,7 @@ public class GameManager : MonoBehaviour
         scoreCountText.gameObject.SetActive(true);
         lifeCount.gameObject.SetActive(true);
         health.SetActive(true);
+        gameLogo.gameObject.SetActive(false);
 
         playerHealth = 3;
         currentScore = 0;

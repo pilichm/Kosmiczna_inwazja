@@ -248,6 +248,14 @@ public class GameManager : MonoBehaviour
     }
 
     /*
+     * Method for ending the game.
+     */
+    public void EndGame()
+    {
+        Application.Quit();
+    }
+
+    /*
      * Method for setting difficulty, 1 is hardest, 3 is easiest.
      * Also increases time between respawning of power ups and decreases time barrier is active.
      */

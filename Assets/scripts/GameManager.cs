@@ -29,7 +29,7 @@ public class GameManager : MonoBehaviour
     private int numberOfRows = 4;
     private int numberOfCols = 15;
     private int enemyCount;
-    private int difficulty = 3;
+    public int difficulty = 3;
 
     private float laserOffsetForward = 3f;
     private float laserOffsetHorizontal = 0.5f;

@@ -23,6 +23,9 @@ public class EnemyRandomShoot : MonoBehaviour
     {
         // Randomise time when enemy starts shooting and delay between each shot.
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+
+        maxIntervalTime *= gameManager.difficulty;
+
         shootDelay = UnityEngine.Random.Range(0, maxIntervalTime);
         shootInterval = UnityEngine.Random.Range(0, maxIntervalTime);
         InvokeRepeating("Shoot", shootDelay, shootInterval);

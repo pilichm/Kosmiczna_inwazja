@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MoveForward : MonoBehaviour
 {
-    public float speed = 25.0f;
+    public float speed = 15.0f;
 
     private GameManager gameManager;
 
@@ -12,6 +12,7 @@ public class MoveForward : MonoBehaviour
     void Start()
     {
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        speed *= gameManager.difficulty;
     }
 
     // Update is called once per frame

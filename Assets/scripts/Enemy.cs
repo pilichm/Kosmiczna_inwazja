@@ -26,6 +26,9 @@ public class Enemy : MonoBehaviour
     public GameObject player;
 
     private int maxDelayBeforeDownwardMovement = 300;
+    private int enemyBasicMoveSpeed = 30;
+    private int enemyBasicInitialMovementSpeed = 30;
+    private int enemyBasicRotationSpeed = 30;
 
     // Start is called before the first frame update
     void Start()
@@ -34,10 +37,15 @@ public class Enemy : MonoBehaviour
 
         // Randomise enemy movement - rotation, speed and direction.
         initialX = transform.position.x;
+
+        enemyBasicMoveSpeed /= gameManager.difficulty;
+        enemyBasicInitialMovementSpeed /= gameManager.difficulty;
+        enemyBasicRotationSpeed /= gameManager.difficulty;
+
         moveDirection = UnityEngine.Random.Range(-1, 1);
-        moveSpeed = UnityEngine.Random.Range(5, 10);
-        initialMoveSpeed = UnityEngine.Random.Range(10, 20);
-        rotationSpeed = UnityEngine.Random.Range(1, 10);
+        moveSpeed = UnityEngine.Random.Range(enemyBasicMoveSpeed/2, enemyBasicMoveSpeed);
+        initialMoveSpeed = UnityEngine.Random.Range(enemyBasicInitialMovementSpeed, 2*enemyBasicInitialMovementSpeed);
+        rotationSpeed = UnityEngine.Random.Range(1, enemyBasicRotationSpeed);
         initialMovementEnded = false;
         downwardMovementDelayEnded = false;
         delayStarted = false;

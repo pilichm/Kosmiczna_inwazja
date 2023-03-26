@@ -16,12 +16,6 @@ public class MainMenuExitButton : MonoBehaviour
         button.onClick.AddListener(EndGame);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     // Function for ending game on click.
     private void EndGame()
     {

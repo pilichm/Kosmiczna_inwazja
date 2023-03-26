@@ -17,12 +17,6 @@ public class MainMenuDifficultyButton : MonoBehaviour
         button.onClick.AddListener(SetDifficulty);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     /*
      * Method for setting difficulty in game manager.
      */

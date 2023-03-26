@@ -15,7 +15,7 @@ public class RotateBarier : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         if (!gameManager.isPaused)
         {

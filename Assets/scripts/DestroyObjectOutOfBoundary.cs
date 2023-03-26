@@ -14,7 +14,7 @@ public class DestroyObjectOutOfBoundary : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         if (gameObject.transform.position.z < minBottomZ || gameObject.transform.position.z > maxTopZ)
         {

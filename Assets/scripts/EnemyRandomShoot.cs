@@ -32,12 +32,6 @@ public class EnemyRandomShoot : MonoBehaviour
         enemyAudio = GetComponent<AudioSource>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     // Make enemy shoot laser down the screen.
     void Shoot()
     {

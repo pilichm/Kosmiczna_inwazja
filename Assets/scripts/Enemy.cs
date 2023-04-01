@@ -90,8 +90,8 @@ public class Enemy : MonoBehaviour
                     transform.Translate(1 * Vector3.right * moveSpeed * Time.deltaTime);
                     transform.eulerAngles = new Vector3(
                         transform.eulerAngles.x,
-                        transform.eulerAngles.y + rotationSpeed,
-                        transform.eulerAngles.z);
+                        transform.eulerAngles.y,
+                        transform.eulerAngles.z + rotationSpeed);
                 }
             }
             else

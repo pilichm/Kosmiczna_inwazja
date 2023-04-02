@@ -37,6 +37,7 @@ public class EnemyRandomShoot : MonoBehaviour
     {
         if (!gameManager.isPaused && !gameManager.gameStartedFromButton)
         {
+            Debug.Log("FIRE");
             enemyAudio.PlayOneShot(laserSound, 0.1f);
             Instantiate(enemyLaserPrefab, transform.position, Quaternion.Euler(90, 0, 0));
         }
